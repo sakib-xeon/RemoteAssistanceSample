@@ -2,16 +2,11 @@
  * Any code on this blog is subject to the terms specified at http://www.microsoft.com/info/cpyright.mspx. 
  */
 
+using RDPCOMAPILib;
 using System;
 using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using RDPCOMAPILib;
+using System.Windows.Forms;
 
 namespace WinSharer
 {
@@ -39,10 +34,10 @@ namespace WinSharer
                 m_pRdpSession.OnControlLevelChangeRequest += new _IRDPSessionEvents_OnControlLevelChangeRequestEventHandler(OnControlLevelChangeRequest);
 
                 m_pRdpSession.Open();
-                IRDPSRAPIInvitation pInvitation = m_pRdpSession.Invitations.CreateInvitation("WinPresenter","PresentationGroup","",5);
+                IRDPSRAPIInvitation pInvitation = m_pRdpSession.Invitations.CreateInvitation("WinPresenter", "PresentationGroup", "", 5);
                 string invitationString = pInvitation.ConnectionString;
                 WriteToFile(invitationString);
-                LogTextBox.Text += "Presentation Started. Your Desktop is being shared." + Environment.NewLine;
+                LogTextBox.Text += invitationString + Environment.NewLine + "Presentation Started. Your Desktop is being shared." + Environment.NewLine;
             }
             catch (Exception ex)
             {
@@ -84,7 +79,7 @@ namespace WinSharer
         {
             using (StreamWriter sw = File.CreateText("inv.xml"))
             {
-                sw.WriteLine (InviteString);
+                sw.WriteLine(InviteString);
             }
 
         }

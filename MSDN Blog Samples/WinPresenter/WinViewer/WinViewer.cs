@@ -2,15 +2,11 @@
  * Any code on this blog is subject to the terms specified at http://www.microsoft.com/info/cpyright.mspx. 
  */
 
+using AxRDPCOMAPILib;
+using Microsoft.VisualBasic;
 using System;
 using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using AxRDPCOMAPILib;
 
 namespace WinViewer
 {
@@ -47,7 +43,7 @@ namespace WinViewer
             string ReadText = null;
             string FileName = null;
             string[] args = Environment.GetCommandLineArgs();
-            
+
             if (args.Length == 2)
             {
                 if (!args[1].EndsWith("inv.xml"))
@@ -63,7 +59,7 @@ namespace WinViewer
             {
                 FileName = "inv.xml";
             }
-            
+
             LogTextBox.Text += ("Reading the connection string from the file name " +
                 FileName + Environment.NewLine);
             try
@@ -76,6 +72,8 @@ namespace WinViewer
             }
             catch (Exception ex)
             {
+                var res = Interaction.InputBox("Invite?", "Invitation", "");
+                ReadText = res;
                 LogTextBox.Text += ("Error in Reading input file. Error Info: " + ex.ToString() + Environment.NewLine);
             }
             return ReadText;
